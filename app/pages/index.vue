@@ -12,5 +12,9 @@
     <Button>
       Count
     </Button>
+    <Input
+      type="email"
+      placeholder="Email"
+    />
   </section>
 </template>
