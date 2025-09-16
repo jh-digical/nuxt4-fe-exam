@@ -1,14 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
-
-  css: ['~/assets/css/main.css'],
-  eslint: {
-    config: {
-      stylistic: true
-    }
-  },
   modules: [
     '@nuxt/eslint',
     '@nuxt/fonts',
@@ -17,6 +8,28 @@ export default defineNuxtConfig({
     '@nuxt/test-utils',
     '@nuxt/scripts',
     '@pinia/nuxt',
-    '@nuxtjs/tailwindcss'
-  ]
+    '@nuxtjs/tailwindcss',
+    'shadcn-nuxt',
+    '@vueuse/nuxt',
+  ],
+  devtools: { enabled: true },
+
+  css: ['~/assets/css/main.css'],
+  compatibilityDate: '2025-07-15',
+  eslint: {
+    config: {
+      stylistic: true,
+    },
+  },
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: '',
+    /**
+     * Directory that the component lives in.
+     * @default "./app/components/ui"
+     */
+    componentDir: './app/components/ui',
+  },
 })
