@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { columns } from '@/components/todos/columns'
-import { todosData } from '@/components/todos/data/todos'
+import { todosData as seed } from '@/components/todos/data/todos'
 import DataTable from '@/components/todos/data-table.vue'
 import DataTablePagination from '@/components/todos/data-table-pagination.vue'
 
@@ -10,6 +10,7 @@ definePageMeta({
   showNewTodo: true,
 })
 
+const tableData = ref(seed.map(t => ({ ...t })))
 const pageSize = 10
 const dataTableRef = ref<InstanceType<typeof DataTable> | null>(null)
 </script>
@@ -32,7 +33,7 @@ const dataTableRef = ref<InstanceType<typeof DataTable> | null>(null)
                 variant="secondary"
                 class="rounded-full px-2 py-1"
               >
-                {{ todosData.length }} items
+                {{ tableData.length }} items
               </Badge>
             </div>
           </CardHeader>
@@ -41,7 +42,7 @@ const dataTableRef = ref<InstanceType<typeof DataTable> | null>(null)
             <DataTable
               ref="dataTableRef"
               :columns="columns"
-              :data="todosData"
+              :data="tableData"
               :page-size="pageSize"
             />
           </CardContent>
