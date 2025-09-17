@@ -20,8 +20,14 @@ export default defineNuxtConfig({
     },
   ],
   devtools: { enabled: true },
+  app: {
+    baseURL: '/', // user/org page => keep '/'
+  },
   css: ['~/assets/css/main.css'],
   compatibilityDate: '2025-07-15',
+  nitro: {
+    preset: 'github_pages',
+  },
   echarts: {
     renderer: 'canvas', // or 'svg' or both ['svg','canvas']
     charts: ['BarChart', 'LineChart', 'PieChart'], // only import charts you use
