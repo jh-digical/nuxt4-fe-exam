@@ -1,5 +1,4 @@
 <script setup lang="ts" generic="TData, TValue">
-import { computed, watch } from 'vue'
 import type { ColumnDef } from '@tanstack/vue-table'
 import { FlexRender, getCoreRowModel, getPaginationRowModel, useVueTable } from '@tanstack/vue-table'
 
@@ -10,10 +9,15 @@ const props = defineProps<{
 }>()
 
 const table = useVueTable({
-  get data() { return props.data },
-  get columns() { return props.columns },
+  get data() {
+    return props.data
+  },
+  get columns() {
+    return props.columns
+  },
   getCoreRowModel: getCoreRowModel(),
   getPaginationRowModel: getPaginationRowModel(),
+  getRowId: (row: any) => String(row.id),
   initialState: {
     pagination: {
       pageIndex: 0,
@@ -22,26 +26,21 @@ const table = useVueTable({
   },
 })
 
-watch(() => props.pageSize, (ps) => {
-  if (typeof ps === 'number' && ps > 0) table.setPageSize(ps)
-})
-
-// expose the TanStack table to the parent (Card footer)
 defineExpose({ table })
-
-// leaf columns (in render order) to drive <colgroup>
-const leafColumns = computed(() => table.getAllLeafColumns())
 </script>
 
 <template>
   <div class="rounded-md border">
     <Table class="w-full table-fixed min-w-[640px]">
-      <!-- Enforce percentage widths per column -->
       <colgroup>
         <col
-          v-for="col in leafColumns"
+          v-for="col in table.getAllLeafColumns()"
           :key="col.id"
-          :style="{ width: ((col.columnDef as any).meta?.widthPct ?? (100 / leafColumns.length)) + '%' }"
+          :style="{
+            width:
+              ((col.columnDef as any).meta?.widthPct
+                ?? 100 / table.getAllLeafColumns().length) + '%',
+          }"
         >
       </colgroup>
 
@@ -80,6 +79,7 @@ const leafColumns = computed(() => table.getAllLeafColumns())
             </TableCell>
           </TableRow>
         </template>
+
         <template v-else>
           <TableRow>
             <TableCell
@@ -96,5 +96,7 @@ const leafColumns = computed(() => table.getAllLeafColumns())
 </template>
 
 <style scoped>
-:deep([data-state='checked'] svg) { color: #fff; }
+:deep([data-state='checked'] svg) {
+  color: #fff;
+}
 </style>

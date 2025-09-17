@@ -1,39 +1,35 @@
 <script setup lang="ts">
 import { columns } from '@/components/todos/columns'
-import { todosData as seed } from '@/components/todos/data/todos'
 import DataTable from '@/components/todos/data-table.vue'
 import DataTablePagination from '@/components/todos/data-table-pagination.vue'
 
 useHead({ title: 'Todos - JHM' })
-definePageMeta({
-  showNav: true,
-  showNewTodo: true,
-})
+definePageMeta({ showNav: true, showNewTodo: true })
 
-const tableData = ref(seed.map(t => ({ ...t })))
-const pageSize = 10
+const store = useTodosStore()
 const dataTableRef = ref<InstanceType<typeof DataTable> | null>(null)
 </script>
 
 <template>
   <section class="container mx-auto px-4 py-10">
     <div class="mx-auto max-w-6xl">
-      <!-- Subtle fancy accent -->
       <div class="rounded-2xl p-[1px] bg-gradient-to-r from-fuchsia-500 via-violet-500 to-indigo-500">
-        <Card class="rounded-[calc(theme(borderRadius.2xl)-1px)] shadow-lg">
+        <Card class="rounded-[calc(theme(borderRadius.2xl)-1px)] shadow-lg min-h-[652px]">
           <CardHeader class="pb-3">
             <div class="flex items-start justify-between gap-4">
               <div>
                 <CardTitle class="text-2xl">
                   Todos
                 </CardTitle>
-                <CardDescription>Static mock data • 10 items per page</CardDescription>
+                <CardDescription>
+                  {{ dataTableRef?.table.getState().pagination.pageSize }} items per page
+                </CardDescription>
               </div>
               <Badge
                 variant="secondary"
                 class="rounded-full px-2 py-1"
               >
-                {{ tableData.length }} items
+                {{ store.total }} items
               </Badge>
             </div>
           </CardHeader>
@@ -42,13 +38,11 @@ const dataTableRef = ref<InstanceType<typeof DataTable> | null>(null)
             <DataTable
               ref="dataTableRef"
               :columns="columns"
-              :data="tableData"
-              :page-size="pageSize"
+              :data="store.items"
             />
           </CardContent>
 
-          <CardFooter class="pt-4">
-            <!-- Pass the exposed table from DataTable to the Pagination -->
+          <CardFooter class="pt-4 mt-auto">
             <DataTablePagination
               v-if="dataTableRef?.table"
               :table="dataTableRef.table"

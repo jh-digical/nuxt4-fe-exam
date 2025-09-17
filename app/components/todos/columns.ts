@@ -14,14 +14,13 @@ export const columns: ColumnDef<Todo>[] = [
     accessorKey: 'done',
     meta: { widthPct: 10 },
     header: () => h('div', { class: 'whitespace-nowrap' }, 'Status'),
-    cell: ({ row }) =>
-      h('div', { class: 'flex items-center' }, [
+    cell: ({ row }) => {
+      const store = useTodosStore()
+      const t = row.original
+      return h('div', { class: 'flex items-center' }, [
         h(Checkbox, {
-          // ✅ two-way: keep prop + handle update
-          'modelValue': row.original.done,
-          'onUpdate:modelValue': (val: boolean) => {
-            row.original.done = val
-          },
+          'modelValue': t.done,
+          'onUpdate:modelValue': (val: boolean) => store.toggleDone(t.id, val),
           'aria-label': 'Todo status',
           'class': [
             'h-5 w-5 rounded bg-background',
@@ -33,7 +32,8 @@ export const columns: ColumnDef<Todo>[] = [
             'transition-colors duration-200',
           ],
         }),
-      ]),
+      ])
+    },
     enableSorting: false,
   },
   {
