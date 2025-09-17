@@ -18,6 +18,8 @@ const showNewTodo = computed(() => !!route.meta.showNewTodo)
 const baseItem = 'inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors'
 const activeItem = 'bg-gradient-to-r from-fuchsia-500/10 to-indigo-500/10 text-foreground border border-border/50 shadow-sm'
 const idleItem = 'text-muted-foreground hover:text-foreground hover:bg-accent hover:text-accent-foreground'
+
+const emit = defineEmits<{ (e: 'new-todo'): void }>()
 </script>
 
 <template>
@@ -79,6 +81,7 @@ const idleItem = 'text-muted-foreground hover:text-foreground hover:bg-accent ho
         <Button
           v-if="showNewTodo"
           class="gap-2"
+          @click="emit('new-todo')"
         >
           <Plus
             class="h-4 w-4"
@@ -137,7 +140,10 @@ const idleItem = 'text-muted-foreground hover:text-foreground hover:bg-accent ho
                 v-if="showNewTodo"
                 as-child
               >
-                <Button class="w-full gap-2">
+                <Button
+                  class="w-full gap-2"
+                  @click="$emit('new-todo')"
+                >
                   <Plus
                     class="h-4 w-4"
                     aria-hidden="true"

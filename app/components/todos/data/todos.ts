@@ -21,4 +21,9 @@ export const todosData: Todo[] = [
   { id: 18, title: 'Refill water bottles', done: true, tag: 'home' },
   { id: 19, title: 'Review monthly budget', done: false, tag: 'finance' },
   { id: 20, title: 'Meditate 10 minutes', done: false, tag: 'health' },
+  { id: 21, title: 'Sort laundry', done: true, tag: 'home' },
+  { id: 22, title: 'Refill water bottles', done: true, tag: 'home' },
+  { id: 23, title: 'Review monthly budget', done: false, tag: 'finance' },
+  { id: 24, title: 'Meditate 10 minutes', done: false, tag: 'health' },
+  { id: 25, title: 'Backup laptop files', done: false, tag: 'work' },
 ]
