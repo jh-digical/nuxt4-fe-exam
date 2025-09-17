@@ -127,7 +127,7 @@ const previewTodos = ref([
                     :key="todo.id"
                     class="rounded-lg border bg-card p-3 flex flex-col gap-2 sm:gap-3 sm:flex-row sm:items-center sm:justify-between"
                   >
-                    <div class="flex items-start sm:items-center gap-3 min-w-0">
+                    <div class="flex items-start sm:items-center gap-3 min-w-0 pointer-events-none">
                       <Checkbox
                         :model-value="todo.done"
                         disabled

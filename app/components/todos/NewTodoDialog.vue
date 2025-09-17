@@ -50,7 +50,7 @@ function onSubmit() {
         />
       </div>
 
-      <DialogFooter class="gap-2 sm:gap-0">
+      <DialogFooter class="gap-2">
         <Button
           variant="secondary"
           @click="close"
