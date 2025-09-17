@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
     '@vueuse/nuxt',
+    'nuxt-echarts',
   ],
   components: [
     {
@@ -21,6 +22,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   compatibilityDate: '2025-07-15',
+  echarts: {
+    renderer: 'canvas', // or 'svg' or both ['svg','canvas']
+    charts: ['BarChart', 'LineChart', 'PieChart'], // only import charts you use
+    components: ['TooltipComponent', 'GridComponent', 'DatasetComponent', 'LegendComponent'], // essential components
+    features: ['LabelLayout', 'UniversalTransition'], // optional features
+  },
   eslint: {
     config: {
       stylistic: true,

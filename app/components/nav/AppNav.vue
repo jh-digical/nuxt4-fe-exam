@@ -52,6 +52,18 @@ const emit = defineEmits<{ (e: 'new-todo'): void }>()
       </NuxtLink>
 
       <div class="hidden sm:flex items-center gap-3 ml-auto">
+        <Button
+          v-if="showNewTodo"
+          class="gap-2"
+          @click="emit('new-todo')"
+        >
+          <Plus
+            class="h-4 w-4"
+            aria-hidden="true"
+          />
+          New Todo
+        </Button>
+
         <NavigationMenu>
           <NavigationMenuList class="gap-1">
             <NavigationMenuItem
@@ -77,18 +89,6 @@ const emit = defineEmits<{ (e: 'new-todo'): void }>()
           <NavigationMenuIndicator />
           <NavigationMenuViewport />
         </NavigationMenu>
-
-        <Button
-          v-if="showNewTodo"
-          class="gap-2"
-          @click="emit('new-todo')"
-        >
-          <Plus
-            class="h-4 w-4"
-            aria-hidden="true"
-          />
-          New Todo
-        </Button>
       </div>
 
       <div class="sm:hidden">

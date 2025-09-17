@@ -8,6 +8,9 @@ definePageMeta({ showNav: true, showNewTodo: true })
 
 const store = useTodosStore()
 const dataTableRef = ref<InstanceType<typeof DataTable> | null>(null)
+
+const doneCount = computed(() => store.items.filter(t => t.done).length)
+const notDoneCount = computed(() => store.items.length - doneCount.value)
 </script>
 
 <template>
@@ -16,7 +19,7 @@ const dataTableRef = ref<InstanceType<typeof DataTable> | null>(null)
       <div class="rounded-2xl p-[1px] bg-gradient-to-r from-fuchsia-500 via-violet-500 to-indigo-500">
         <Card class="rounded-[calc(theme(borderRadius.2xl)-1px)] shadow-lg min-h-[652px]">
           <CardHeader class="pb-3">
-            <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col sm:flex-row items-start justify-between gap-4">
               <div>
                 <CardTitle class="text-2xl">
                   Todos
@@ -25,12 +28,28 @@ const dataTableRef = ref<InstanceType<typeof DataTable> | null>(null)
                   {{ dataTableRef?.table.getState().pagination.pageSize }} items per page
                 </CardDescription>
               </div>
-              <Badge
-                variant="secondary"
-                class="rounded-full px-2 py-1"
-              >
-                {{ store.total }} items
-              </Badge>
+
+              <!-- Replaced single count badge with three badges -->
+              <div class="flex items-center gap-2">
+                <Badge
+                  variant="secondary"
+                  class="rounded-full px-2 py-1"
+                >
+                  Total: {{ store.items.length }}
+                </Badge>
+                <Badge
+                  variant="outline"
+                  class="rounded-full px-2 py-1"
+                >
+                  Done: {{ doneCount }}
+                </Badge>
+                <Badge
+                  variant="outline"
+                  class="rounded-full px-2 py-1"
+                >
+                  Not done: {{ notDoneCount }}
+                </Badge>
+              </div>
             </div>
           </CardHeader>
 
