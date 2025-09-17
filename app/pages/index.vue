@@ -14,14 +14,12 @@ const previewTodos = ref([
 
 <template>
   <section class="relative isolate">
-    <!-- Full-page animated rainbow background -->
     <div
       aria-hidden="true"
       class="rainbow-veil fixed inset-0 z-0 pointer-events-none"
     />
 
     <div class="relative z-10 container mx-auto px-4 py-16 md:py-24">
-      <!-- Hero -->
       <Transition
         name="fade-up"
         appear
@@ -31,7 +29,9 @@ const previewTodos = ref([
             Welcome
           </p>
 
-          <h1 class="rainbow-text inline-block text-5xl md:text-6xl font-extrabold tracking-tight md:tracking-tighter leading-tight">
+          <h1
+            class="rainbow-text inline-block text-5xl md:text-6xl font-extrabold tracking-tight md:tracking-tighter leading-tight"
+          >
             Todo List Project using
             <span class="animated-underline">Nuxt 4</span>
             and
@@ -69,7 +69,6 @@ const previewTodos = ref([
             </div>
           </div>
 
-          <!-- CTA -->
           <div class="mt-8 flex items-center justify-center">
             <NuxtLink
               to="/todos"
@@ -98,7 +97,6 @@ const previewTodos = ref([
         </div>
       </Transition>
 
-      <!-- Separator -->
       <div
         role="separator"
         aria-orientation="horizontal"
@@ -108,7 +106,6 @@ const previewTodos = ref([
                shadow-[0_0_0_1px_rgba(0,0,0,0.04)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.04)]"
       />
 
-      <!-- Preview list -->
       <Transition
         name="fade-up"
         appear
@@ -124,13 +121,13 @@ const previewTodos = ref([
               </CardHeader>
 
               <CardContent>
-                <ul class="grid gap-3">
+                <ul class="flex flex-col gap-3">
                   <li
                     v-for="todo in previewTodos"
                     :key="todo.id"
-                    class="rounded-lg border bg-card p-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+                    class="rounded-lg border bg-card p-3 flex flex-col gap-2 sm:gap-3 sm:flex-row sm:items-center sm:justify-between"
                   >
-                    <div class="flex items-center gap-3 min-w-0">
+                    <div class="flex items-start sm:items-center gap-3 min-w-0">
                       <Checkbox
                         :model-value="todo.done"
                         disabled
@@ -143,22 +140,27 @@ const previewTodos = ref([
                                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2
                                disabled:opacity-100 transition-colors duration-200"
                       />
-                      <span
-                        class="text-sm md:text-base min-w-0 break-words"
-                        :class="todo.done ? 'line-through text-muted-foreground' : ''"
-                      >
-                        {{ todo.title }}
-                      </span>
+                      <div class="min-w-0 flex-1">
+                        <div class="flex flex-wrap items-center gap-2 min-w-0">
+                          <span
+                            class="text-sm md:text-base min-w-0 truncate"
+                            :class="todo.done ? 'line-through text-muted-foreground' : ''"
+                          >
+                            {{ todo.title }}
+                          </span>
+                          <Badge
+                            v-if="todo.tag"
+                            variant="default"
+                            class="hidden sm:inline-flex shrink-0 capitalize"
+                          >
+                            {{ todo.tag }}
+                          </Badge>
+                          <span class="sr-only">Tag: {{ todo.tag }}</span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-2 sm:flex-nowrap sm:justify-end justify-center">
-                      <Badge
-                        v-if="todo.tag"
-                        variant="default"
-                        class="capitalize"
-                      >
-                        {{ todo.tag }}
-                      </Badge>
+                    <div class="mt-1 sm:mt-0 sm:ml-4 flex items-center justify-end w-full sm:w-auto self-end sm:self-auto">
                       <Badge
                         :class="todo.done
                           ? 'border-emerald-500/30 bg-emerald-500/15 text-emerald-700 dark:border-emerald-400/30 dark:bg-emerald-400/15 dark:text-emerald-300'
@@ -176,7 +178,6 @@ const previewTodos = ref([
       </Transition>
     </div>
 
-    <!-- Floating author badge (center on mobile, bottom-right on sm+) -->
     <div
       role="note"
       aria-label="Author badge"
@@ -207,15 +208,12 @@ const previewTodos = ref([
 <style scoped>
 :deep([data-state='checked'] svg) { color: #fff; }
 
-/* Animated multi-color gradient text */
 @keyframes rainbow-shift {
   0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
+  50% { background-position: 100% 50%; }
 }
 .rainbow-text {
-  background-image: linear-gradient(90deg,
-    #ef4444, #f97316, #f59e0b, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #d946ef, #ef4444
-  );
+  background-image: linear-gradient(90deg, #ef4444, #f97316, #f59e0b, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #d946ef, #ef4444);
   background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -224,17 +222,14 @@ const previewTodos = ref([
 }
 @media (prefers-color-scheme: dark) {
   .rainbow-text {
-    background-image: linear-gradient(90deg,
-      #f87171, #fb923c, #fbbf24, #34d399, #22d3ee, #60a5fa, #a78bfa, #f472b6, #f87171
-    );
+    background-image: linear-gradient(90deg, #f87171, #fb923c, #fbbf24, #34d399, #22d3ee, #60a5fa, #a78bfa, #f472b6, #f87171);
   }
 }
 @media (prefers-reduced-motion: reduce) { .rainbow-text { animation: none; } }
 
-/* Animated gradient underline for highlighted words */
 @keyframes underline-shift {
   0%, 100% { background-position: 0 100%; }
-  50%      { background-position: 100% 100%; }
+  50% { background-position: 100% 100%; }
 }
 .animated-underline {
   background-image: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #d946ef);
@@ -246,15 +241,11 @@ const previewTodos = ref([
 }
 @media (prefers-reduced-motion: reduce) { .animated-underline { animation: none; } }
 
-/* Fade-up transition */
 .fade-up-enter-active { transition: all .25s ease; }
 .fade-up-enter-from { opacity: 0; transform: translateY(6px); }
 
-/* Full-page animated background */
 .rainbow-veil {
-  background: linear-gradient(90deg,
-    #ef4444, #f97316, #f59e0b, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #d946ef, #ef4444
-  );
+  background: linear-gradient(90deg, #ef4444, #f97316, #f59e0b, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #d946ef, #ef4444);
   background-size: 300% 100%;
   animation: rainbow-shift 8s ease-in-out infinite;
   filter: blur(36px) saturate(120%);
