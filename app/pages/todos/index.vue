@@ -5,6 +5,10 @@ import DataTable from '@/components/todos/data-table.vue'
 import DataTablePagination from '@/components/todos/data-table-pagination.vue'
 
 useHead({ title: 'Todos - JHM' })
+definePageMeta({
+  showNav: true,
+  showNewTodo: true,
+})
 
 const pageSize = 10
 const dataTableRef = ref<InstanceType<typeof DataTable> | null>(null)
