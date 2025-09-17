@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-echarts',
   ],
+  ssr: false,
   components: [
     {
       path: '~/components',
@@ -21,7 +22,7 @@ export default defineNuxtConfig({
   ],
   devtools: { enabled: true },
   app: {
-    baseURL: '/', // user/org page => keep '/'
+    baseURL: '/nuxt4-fe-exam/', // user/org page => keep '/'
   },
   css: ['~/assets/css/main.css'],
   compatibilityDate: '2025-07-15',
